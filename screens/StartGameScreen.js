@@ -9,7 +9,7 @@ const StartGameScreen = () => {
       <Card style={styles.inputContainer}>
         <Text style={styles.text}>Enter a Number</Text>
         <TextInput />
-        <View>
+        <View style={styles.buttonContainer}>
           <Button title="Reset" onPress={() => {}} />
           <Button title="Confirm" onPress={() => {}} />
         </View>
@@ -35,8 +35,14 @@ const styles = StyleSheet.create({
     width: 300,
     maxWidth: "80%",
     padding: 20,
-    marginVertical: 20,
+    marginVertical: 10,
     alignItems: "center",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
   },
 });
 
