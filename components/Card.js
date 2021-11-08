@@ -1,0 +1,28 @@
+import React from "react";
+import { View, StyleSheet } from "react-native";
+
+const Card = (props) => {
+  return (
+    <View style={{ ...styles.container, ...props.style }}>
+      {props.children}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+
+    elevation: 8,
+    backgroundColor: "white",
+    borderRadius: 10,
+  },
+});
+
+export default Card;
