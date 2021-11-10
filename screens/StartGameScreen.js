@@ -1,17 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import Card from "../components/Card";
+import colors from "../constants/colors";
+import Input from "../components/Input";
 
 const StartGameScreen = () => {
+  const [enteredValue, setEnteredValue] = useState("");
+
+  const handleInputValue = (text) => {
+    setEnteredValue(text.replace(/[^0-9]/g, ""));
+  };
+
   return (
     <View style={styles.screen}>
       <Text style={styles.title}>Start a New Game!</Text>
       <Card style={styles.inputContainer}>
         <Text style={styles.text}>Enter a Number</Text>
-        <TextInput />
+        <Input
+          maxLength={2}
+          keyboardType="numeric"
+          autoCapitalation="none"
+          autoCorrect={false}
+          value={enteredValue}
+          onChangeText={handleInputValue}
+        />
         <View style={styles.buttonContainer}>
-          <Button title="Reset" onPress={() => {}} />
-          <Button title="Confirm" onPress={() => {}} />
+          <Button title="Reset" color={colors.primary} />
+          <Button title="Confirm" color={colors.accents} />
         </View>
       </Card>
       <Card>
