@@ -1,38 +1,70 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Keyboard,
+  TouchableWithoutFeedback,
+  Button,
+  StyleSheet,
+} from "react-native";
 import Card from "../components/Card";
 import colors from "../constants/colors";
 import Input from "../components/Input";
 
 const StartGameScreen = () => {
   const [enteredValue, setEnteredValue] = useState("");
+  const [confirmed, setConfirmed] = useState("");
 
   const handleInputValue = (text) => {
     setEnteredValue(text.replace(/[^0-9]/g, ""));
   };
 
+  const handleResetInput = () => setEnteredValue("");
+
+  const handleConfirmInput = () => {
+    const choseNumber = parseInt(enteredValue);
+    if (isNaN(choseNumber) || choseNumber <= 0 || choseNumber > 99) return;
+    setConfirmed(enteredValue);
+    setEnteredValue("");
+  };
+
+  const confirmedOutput = confirmed ? (
+    <Card>
+      <Text>You selected: {confirmed}</Text>
+      <Button title="START GAME" color={colors.primary} />
+    </Card>
+  ) : null;
+
   return (
-    <View style={styles.screen}>
-      <Text style={styles.title}>Start a New Game!</Text>
-      <Card style={styles.inputContainer}>
-        <Text style={styles.text}>Enter a Number</Text>
-        <Input
-          maxLength={2}
-          keyboardType="numeric"
-          autoCapitalation="none"
-          autoCorrect={false}
-          value={enteredValue}
-          onChangeText={handleInputValue}
-        />
-        <View style={styles.buttonContainer}>
-          <Button title="Reset" color={colors.primary} />
-          <Button title="Confirm" color={colors.accents} />
-        </View>
-      </Card>
-      <Card>
-        <Text> Start Game</Text>
-      </Card>
-    </View>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.screen}>
+        <Text style={styles.title}>Start a New Game!</Text>
+        <Card style={styles.inputContainer}>
+          <Text style={styles.text}>Enter a Number</Text>
+          <Input
+            maxLength={2}
+            keyboardType="numeric"
+            autoCapitalation="none"
+            autoCorrect={false}
+            value={enteredValue}
+            onChangeText={handleInputValue}
+          />
+          <View style={styles.buttonContainer}>
+            <Button
+              title="Reset"
+              color={colors.primary}
+              onPress={handleResetInput}
+            />
+            <Button
+              title="Confirm"
+              color={colors.accents}
+              onPress={handleConfirmInput}
+            />
+          </View>
+        </Card>
+        {confirmedOutput}
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
