@@ -6,12 +6,13 @@ import {
   TouchableWithoutFeedback,
   Button,
   StyleSheet,
+  Dimensions,
 } from "react-native";
 import Card from "../components/Card";
 import colors from "../constants/colors";
 import Input from "../components/Input";
 
-const StartGameScreen = () => {
+const StartGameScreen = ({ onStartGame }) => {
   const [enteredValue, setEnteredValue] = useState("");
   const [confirmed, setConfirmed] = useState("");
 
@@ -28,10 +29,16 @@ const StartGameScreen = () => {
     setEnteredValue("");
   };
 
+  const handleStartGame = () => onStartGame(confirmed);
+
   const confirmedOutput = confirmed ? (
     <Card>
-      <Text>You selected: {confirmed}</Text>
-      <Button title="START GAME" color={colors.primary} />
+      <Text style={{ margin: 30 }}>You selected: {confirmed}</Text>
+      <Button
+        onPress={handleStartGame}
+        title="START GAME"
+        color={colors.primary}
+      />
     </Card>
   ) : null;
 
@@ -51,11 +58,13 @@ const StartGameScreen = () => {
           />
           <View style={styles.buttonContainer}>
             <Button
+              style={styles.button}
               title="Reset"
               color={colors.primary}
               onPress={handleResetInput}
             />
             <Button
+              style={styles.button}
               title="Confirm"
               color={colors.accents}
               onPress={handleConfirmInput}
@@ -79,8 +88,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   inputContainer: {
-    width: 300,
-    maxWidth: "80%",
+    width: "80%",
     padding: 20,
     marginVertical: 10,
     alignItems: "center",
@@ -90,6 +98,9 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "space-between",
     paddingHorizontal: 15,
+  },
+  button: {
+    flex: 1,
   },
 });
 
